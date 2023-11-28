@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User</title>
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form method="POST" action="{% url 'update_user' user.id %}">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ user.name }}"><br><br>
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="{{ user.username }}"><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        
+        <label for="active">Active:</label>
+        <input type="checkbox" id="active" name="active" {% if user.active %}checked{% endif %}><br><br>
+        
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>

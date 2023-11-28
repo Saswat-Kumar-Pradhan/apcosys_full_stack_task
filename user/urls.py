@@ -26,6 +26,7 @@ urlpatterns = [
     path('dashboard/', views.user_dashboard, name='dashboard'),
     path('admindashboard/', views.admin_dashboard, name='admindashboard'),
     path('edit/<int:user_id>/', views.edit_user, name='edit_user'),
+    path('update/<int:user_id>/', views.update_user, name='update_user'),
     path('delete/<int:user_id>/', views.delete_user, name='delete_user'),
     path('disable/<int:user_id>/', views.disable_user, name='disable_user'),
     path('enable/<int:user_id>/', views.enable_user, name='enable_user'),

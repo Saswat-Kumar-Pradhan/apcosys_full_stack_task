@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
 from .forms import RegistrationForm, LoginForm
 from .models import User, Admin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def register(request):
     if request.method == 'POST':
@@ -64,25 +66,34 @@ def admin_dashboard(request):
 
 def edit_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    # Logic to handle editing the user data
+    return render(request, 'edit_user.html', {'user': user})
+
+def update_user(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    
+    if request.method == 'POST':
+        user.name = request.POST.get('name')
+        user.username = request.POST.get('username')
+        user.password = request.POST.get('password')
+        user.active = bool(request.POST.get('active'))
+        user.save()
+        return redirect('admindashboard')
+    
     return render(request, 'edit_user.html', {'user': user})
 
 def delete_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    # Logic to handle deleting the user
     user.delete()
     return redirect('admindashboard')
 
 def disable_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    # Logic to handle disabling the user access
     user.active = False
     user.save()
     return redirect('admindashboard')
 
 def enable_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    # Logic to handle disabling the user access
     user.active = True
     user.save()
     return redirect('admindashboard')
